@@ -24,6 +24,7 @@ private:
     bool torpedoHit(int distance);
     bool phaserHit(int distance);
     int phaserDamage(int amount, int distance);
+    int torpedoDamage();
 
 public:
     Game();
