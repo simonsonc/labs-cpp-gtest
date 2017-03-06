@@ -21,6 +21,8 @@ private:
 		return generator() % maximum; 
 	}
 
+    bool torpedoHit(int distance);
+
 public:
     Game();
     void fireWeapon(Untouchables::WebGadget* wg);

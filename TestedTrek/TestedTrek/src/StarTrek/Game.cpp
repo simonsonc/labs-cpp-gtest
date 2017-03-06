@@ -56,15 +56,17 @@ void Game::firePhaser(Galaxy& galaxy) {
 }
 
 void Game::firePhoton(Galaxy& galaxy) {
+    const int base_damage = 800;
+
     Klingon* enemy = (Klingon*)galaxy.variable("target");
     if (m_photon_torpedoes > 0) {
         int distance = enemy->distance();
-        if ((rnd(4) + ((distance / 500) + 1) > 7)) {
+        if (torpedoHit(distance)) {
             stringstream message;
             message << "Torpedo missed Klingon at " << distance << " sectors...";
             galaxy.writeLine(message.str());
         } else {
-            int damage = 800 + rnd(50);
+            int damage = base_damage + rnd(50);
             stringstream message;
             message << "Photons hit Klingon at " << distance << " sectors with " << damage << " units";
             galaxy.writeLine(message.str());
@@ -89,6 +91,11 @@ void Game::firePhoton(Galaxy& galaxy) {
 void Game::fireWeapon(Untouchables::WebGadget* webGadget) {
     Galaxy galaxy(webGadget);
     fireWeapon(galaxy);
+}
+
+bool Game::torpedoHit( int distance )
+{
+    return ((rnd(4) + ((distance / 500) + 1) > 7));
 }
 
 int Game::energyRemaining(void) {
