@@ -32,9 +32,7 @@ void Game::firePhaser(Galaxy& galaxy) {
             message << "Klingon out of range of phasers at " << distance << " sectors...";
             galaxy.writeLine(message.str());
         } else {
-            int damage = amount - (((amount /20)* distance /200) + rnd(200));
-            if (damage < 1)
-                damage = 1;
+            int damage = phaserDamage(amount, distance);
             stringstream message;
             message << "Phasers hit Klingon at " << distance << " sectors with " << damage << " units";
             galaxy.writeLine(message.str());
@@ -101,6 +99,14 @@ bool Game::torpedoHit( int distance )
 bool Game::phaserHit( int distance )
 {
     return (distance <= 4000);
+}
+
+int Game::phaserDamage( int amount, int distance )
+{
+    int damage = amount - (((amount /20)* distance /200) + rnd(200));
+    if (damage < 1)
+        damage = 1;
+    return damage;
 }
 
 int Game::energyRemaining(void) {
