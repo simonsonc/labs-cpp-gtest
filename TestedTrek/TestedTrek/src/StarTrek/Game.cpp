@@ -36,15 +36,8 @@ void Game::firePhaser(Galaxy& galaxy) {
             stringstream message;
             message << "Phasers hit Klingon at " << distance << " sectors with " << damage << " units";
             galaxy.writeLine(message.str());
-            if (damage < enemy->energy()) {
-                enemy->energy(enemy->energy() - damage);
-                stringstream message;
-                message << "Klingon has " << enemy->energy() << " remaining";
-                galaxy.writeLine(message.str());
-            } else {
-                galaxy.writeLine("Klingon destroyed!");
-                enemy->destroy();
-            }
+            std::string damage_msg = dealDamage(damage, enemy);
+            galaxy.writeLine(damage_msg);
         }
         m_phaser_energy -= amount;
 
@@ -66,16 +59,8 @@ void Game::firePhoton(Galaxy& galaxy) {
             stringstream message;
             message << "Photons hit Klingon at " << distance << " sectors with " << damage << " units";
             galaxy.writeLine(message.str());
-
-            if (damage < enemy->energy()) {
-                enemy->energy(enemy->energy() - damage);
-                stringstream message;
-                message << "Klingon has " << enemy->energy() << " remaining";
-                galaxy.writeLine(message.str());
-            } else {
-                galaxy.writeLine("Klingon destroyed!");
-                enemy->destroy();
-            }
+            std::string damage_msg = dealDamage(damage, enemy);
+            galaxy.writeLine(damage_msg);
         }
         m_photon_torpedoes--;
 
@@ -112,6 +97,19 @@ int Game::torpedoDamage()
     const int base_damage = 800;
 
     return base_damage + rnd(50);
+}
+
+std::string Game::dealDamage(int damage, Klingon *enemy)
+{
+    if (damage < enemy->energy()) {
+        enemy->energy(enemy->energy() - damage);
+        stringstream message;
+        message << "Klingon has " << enemy->energy() << " remaining";
+        return message.str();
+    } else {
+        enemy->destroy();
+        return "Klingon destroyed!";
+    }
 }
 
 int Game::energyRemaining(void) {

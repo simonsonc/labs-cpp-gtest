@@ -3,6 +3,7 @@
 
 #include <cstdlib>
 #include <Untouchables/WebGadget.h>
+#include "Klingon.h"
 
 
 namespace StarTrek {
@@ -25,6 +26,7 @@ private:
     bool phaserHit(int distance);
     int phaserDamage(int amount, int distance);
     int torpedoDamage();
+    std::string dealDamage(int damage, Klingon *enemy);
 
 public:
     Game();
