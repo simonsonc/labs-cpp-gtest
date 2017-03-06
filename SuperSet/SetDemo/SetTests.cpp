@@ -166,7 +166,7 @@ TEST_F(SetTestFixture, DifferentSetsAreNotEqual)
     EXPECT_FALSE(set2.Equals(set1));
 }
 
-TEST_F(SetTestFixture, SetsDifferentSizeNotEqual)
+TEST_F(SetTestFixture, DifferentSizeNotEqual)
 {
     Set set1;
     Set set2;
