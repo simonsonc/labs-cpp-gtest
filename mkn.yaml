@@ -46,7 +46,7 @@ profile:
   - name: setTest
     inc: SuperSet/SuperSet
     src: SuperSet/SuperSet
-    main: SuperSet/SetDemo/StockQuoteTests.cpp
+    main: SuperSet/SetDemo/SetTests.cpp
     self: gmock
 
   - name: trekTest

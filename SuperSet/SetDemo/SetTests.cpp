@@ -2,12 +2,7 @@
 //
 
 #include "gtest/gtest.h"
-#include <set.h>
-
-TEST(SuperSet, InitialSizeIsZero) {
-	Set set;
-	EXPECT_EQ(0, set.size());
-}
+#include "Set.h"
 
 int main(int argc, char** argv)
 {
