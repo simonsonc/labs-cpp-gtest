@@ -23,36 +23,36 @@ void Game::fireWeapon(Galaxy& galaxy) {
 }
 
 void Game::firePhaser(Galaxy& galaxy) {
-		int amount = atoi(galaxy.parameter("amount").c_str());
-		Klingon* enemy = (Klingon*)galaxy.variable("target");
-		if (e_ >= amount) {
-			int distance = enemy->distance();
-			if (distance > 4000) {
-				stringstream message;
-				message << "Klingon out of range of phasers at " << distance << " sectors...";
-				galaxy.writeLine(message.str());
-			} else {
-				int damage = amount - (((amount /20)* distance /200) + rnd(200));
-				if (damage < 1)
-					damage = 1;
-				stringstream message;
-				message << "Phasers hit Klingon at " << distance << " sectors with " << damage << " units";
-				galaxy.writeLine(message.str());
-				if (damage < enemy->energy()) {
-					enemy->energy(enemy->energy() - damage);
-					stringstream message;
-					message << "Klingon has " << enemy->energy() << " remaining";
-					galaxy.writeLine(message.str());
-				} else {
-					galaxy.writeLine("Klingon destroyed!");
-					enemy->destroy();
-				}
-			}
-			e_ -= amount;
+    int amount = atoi(galaxy.parameter("amount").c_str());
+    Klingon* enemy = (Klingon*)galaxy.variable("target");
+    if (e_ >= amount) {
+        int distance = enemy->distance();
+        if (distance > 4000) {
+            stringstream message;
+            message << "Klingon out of range of phasers at " << distance << " sectors...";
+            galaxy.writeLine(message.str());
+        } else {
+            int damage = amount - (((amount /20)* distance /200) + rnd(200));
+            if (damage < 1)
+                damage = 1;
+            stringstream message;
+            message << "Phasers hit Klingon at " << distance << " sectors with " << damage << " units";
+            galaxy.writeLine(message.str());
+            if (damage < enemy->energy()) {
+                enemy->energy(enemy->energy() - damage);
+                stringstream message;
+                message << "Klingon has " << enemy->energy() << " remaining";
+                galaxy.writeLine(message.str());
+            } else {
+                galaxy.writeLine("Klingon destroyed!");
+                enemy->destroy();
+            }
+        }
+        e_ -= amount;
 
-		} else {
-			galaxy.writeLine("Insufficient energy to fire phasers!");
-		}
+    } else {
+        galaxy.writeLine("Insufficient energy to fire phasers!");
+    }
 }
 
 void Game::firePhoton(Galaxy& galaxy) {
