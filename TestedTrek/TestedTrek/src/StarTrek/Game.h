@@ -22,6 +22,7 @@ private:
 	}
 
     bool torpedoHit(int distance);
+    bool phaserHit(int distance);
 
 public:
     Game();

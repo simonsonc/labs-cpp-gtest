@@ -27,7 +27,7 @@ void Game::firePhaser(Galaxy& galaxy) {
     Klingon* enemy = (Klingon*)galaxy.variable("target");
     if (m_phaser_energy >= amount) {
         int distance = enemy->distance();
-        if (distance > 4000) {
+        if (!phaserHit(distance)) {
             stringstream message;
             message << "Klingon out of range of phasers at " << distance << " sectors...";
             galaxy.writeLine(message.str());
@@ -96,6 +96,11 @@ void Game::fireWeapon(Untouchables::WebGadget* webGadget) {
 bool Game::torpedoHit( int distance )
 {
     return ((rnd(4) + ((distance / 500) + 1) > 7));
+}
+
+bool Game::phaserHit( int distance )
+{
+    return (distance <= 4000);
 }
 
 int Game::energyRemaining(void) {
