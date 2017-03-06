@@ -16,6 +16,13 @@ Game::Game() : e_(10000), t_(8) {
 
 void Game::fireWeapon(Galaxy& galaxy) {
 	if (galaxy.parameter("command") == "phaser") {
+        firePhaser(galaxy);
+	} else if (galaxy.parameter("command") == "photon") {
+        firePhoton(galaxy);
+	}
+}
+
+void Game::firePhaser(Galaxy& galaxy) {
 		int amount = atoi(galaxy.parameter("amount").c_str());
 		Klingon* enemy = (Klingon*)galaxy.variable("target");
 		if (e_ >= amount) {
@@ -46,37 +53,37 @@ void Game::fireWeapon(Galaxy& galaxy) {
 		} else {
 			galaxy.writeLine("Insufficient energy to fire phasers!");
 		}
+}
 
-	} else if (galaxy.parameter("command") == "photon") {
-		Klingon* enemy = (Klingon*)galaxy.variable("target");
-		if (t_ > 0) {
-			int distance = enemy->distance();
-			if ((rnd(4) + ((distance / 500) + 1) > 7)) {
-				stringstream message;
-				message << "Torpedo missed Klingon at " << distance << " sectors...";
-				galaxy.writeLine(message.str());
-			} else {
-				int damage = 800 + rnd(50);
-				stringstream message;
-				message << "Photons hit Klingon at " << distance << " sectors with " << damage << " units";
-				galaxy.writeLine(message.str());
+void Game::firePhoton(Galaxy& galaxy) {
+    Klingon* enemy = (Klingon*)galaxy.variable("target");
+    if (t_ > 0) {
+        int distance = enemy->distance();
+        if ((rnd(4) + ((distance / 500) + 1) > 7)) {
+            stringstream message;
+            message << "Torpedo missed Klingon at " << distance << " sectors...";
+            galaxy.writeLine(message.str());
+        } else {
+            int damage = 800 + rnd(50);
+            stringstream message;
+            message << "Photons hit Klingon at " << distance << " sectors with " << damage << " units";
+            galaxy.writeLine(message.str());
 
-				if (damage < enemy->energy()) {
-					enemy->energy(enemy->energy() - damage);
-					stringstream message;
-					message << "Klingon has " << enemy->energy() << " remaining";
-					galaxy.writeLine(message.str());
-				} else {
-					galaxy.writeLine("Klingon destroyed!");
-					enemy->destroy();
-				}
-			}
-			t_--;
+            if (damage < enemy->energy()) {
+                enemy->energy(enemy->energy() - damage);
+                stringstream message;
+                message << "Klingon has " << enemy->energy() << " remaining";
+                galaxy.writeLine(message.str());
+            } else {
+                galaxy.writeLine("Klingon destroyed!");
+                enemy->destroy();
+            }
+        }
+        t_--;
 
-		} else {
-			galaxy.writeLine("No more photon torpedoes!");
-		}
-	}
+    } else {
+        galaxy.writeLine("No more photon torpedoes!");
+    }
 }
 
 void Game::fireWeapon(Untouchables::WebGadget* webGadget) {

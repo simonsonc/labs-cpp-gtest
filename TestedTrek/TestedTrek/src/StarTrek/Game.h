@@ -25,6 +25,8 @@ public:
     Game();
     void fireWeapon(Untouchables::WebGadget* wg);
     void fireWeapon(Galaxy& galaxy);
+    void firePhoton(Galaxy& galaxy);
+    void firePhaser(Galaxy& galaxy);
     int energyRemaining(void);
     void torpedoes(int value);
     int torpedoes(void);
