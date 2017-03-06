@@ -58,6 +58,7 @@ TEST_F(SetTestFixture, Size)
     EXPECT_EQ(1, set.Size());
 }
 
+// UNIONS
 TEST_F(SetTestFixture, SetUnion)
 {
     Set set1;
@@ -73,7 +74,7 @@ TEST_F(SetTestFixture, SetUnion)
     EXPECT_TRUE(set3.Contains("B"));
 }
 
-TEST_F(SetTestFixture, SetUnionOnEmptySet)
+TEST_F(SetTestFixture, SetUnionOnAnEmptySet)
 {
     Set set1;
     Set set2;
@@ -86,6 +87,17 @@ TEST_F(SetTestFixture, SetUnionOnEmptySet)
     EXPECT_TRUE(set3.Contains("B"));
 }
 
+TEST_F(SetTestFixture, SetUnionOnEmptySets)
+{
+    Set set1;
+    Set set2;
+
+    Set set3 = set1.Union( set2 );
+
+    EXPECT_TRUE(set3.Empty());
+}
+
+// INTERSECTIONS
 TEST_F(SetTestFixture, SetIntersection)
 {
     Set set1;
@@ -115,7 +127,7 @@ TEST_F(SetTestFixture, SetIntersectionOnEmptySet)
     EXPECT_TRUE(set3.Empty());
 }
 
-TEST_F(SetTestFixture, SetIntersectionWithNoProperIntersection)
+TEST_F(SetTestFixture, SetsWithNoIntersection)
 {
     Set set1;
     Set set2;
@@ -129,6 +141,7 @@ TEST_F(SetTestFixture, SetIntersectionWithNoProperIntersection)
     EXPECT_TRUE(set3.Empty());
 }
 
+// EQUAL SETS
 TEST_F(SetTestFixture, SetsAreEqual)
 {
     Set set1;
@@ -139,6 +152,18 @@ TEST_F(SetTestFixture, SetsAreEqual)
 
     EXPECT_TRUE(set1.Equals(set2));
     EXPECT_TRUE(set2.Equals(set1));
+}
+
+TEST_F(SetTestFixture, DifferentSetsAreNotEqual)
+{
+    Set set1;
+    Set set2;
+
+    set1.Add("A");
+    set2.Add("B");
+
+    EXPECT_FALSE(set1.Equals(set2));
+    EXPECT_FALSE(set2.Equals(set1));
 }
 
 TEST_F(SetTestFixture, SetsDifferentSizeNotEqual)
@@ -152,6 +177,86 @@ TEST_F(SetTestFixture, SetsDifferentSizeNotEqual)
 
     EXPECT_FALSE(set1.Equals(set2));
     EXPECT_FALSE(set2.Equals(set1));
+}
+
+// SUPERSETS
+TEST_F(SetTestFixture, Superset)
+{
+    Set set1;
+    Set set2;
+
+    set1.Add("A");
+    set2.Add("A");
+    set2.Add("B");
+
+    EXPECT_TRUE(set1.IsSuperset(set2));
+    EXPECT_FALSE(set2.IsSuperset(set1));
+}
+
+TEST_F(SetTestFixture, SupersetWithEqualSets)
+{
+    Set set1;
+    Set set2;
+
+    set1.Add("A");
+    set1.Add("B");
+    set2.Add("A");
+    set2.Add("B");
+
+    EXPECT_TRUE(set1.IsSuperset(set2));
+    EXPECT_TRUE(set2.IsSuperset(set1));
+}
+
+TEST_F(SetTestFixture, SupersetWithEmptySet)
+{
+    Set set1;
+    Set set2;
+
+    set2.Add("A");
+    set2.Add("B");
+
+    EXPECT_TRUE(set1.IsSuperset(set2));
+    EXPECT_FALSE(set2.IsSuperset(set1));
+}
+
+// SUBSETS
+TEST_F(SetTestFixture, Subset)
+{
+    Set set1;
+    Set set2;
+
+    set1.Add("A");
+    set2.Add("A");
+    set2.Add("B");
+
+    EXPECT_FALSE(set1.IsSubset(set2));
+    EXPECT_TRUE(set2.IsSubset(set1));
+}
+
+TEST_F(SetTestFixture, SubsetWithEqualSets)
+{
+    Set set1;
+    Set set2;
+
+    set1.Add("A");
+    set1.Add("B");
+    set2.Add("A");
+    set2.Add("B");
+
+    EXPECT_TRUE(set1.IsSubset(set2));
+    EXPECT_TRUE(set2.IsSubset(set1));
+}
+
+TEST_F(SetTestFixture, SubsetWithEmptySet)
+{
+    Set set1;
+    Set set2;
+
+    set2.Add("A");
+    set2.Add("B");
+
+    EXPECT_FALSE(set1.IsSubset(set2));
+    EXPECT_TRUE(set2.IsSubset(set1));
 }
 
 int main(int argc, char** argv)

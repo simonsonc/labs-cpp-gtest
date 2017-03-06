@@ -70,6 +70,16 @@ bool Set::Equals( const Set& other ) const
     return Intersection( other ).Size() == Size();
 }
 
+bool Set::IsSuperset( const Set& other ) const
+{
+    return other.Equals( Union( other ) );
+}
+
+bool Set::IsSubset( const Set& other ) const
+{
+    return Equals( Union( other ) );
+}
+
 Set::Set(void)
 {
 }

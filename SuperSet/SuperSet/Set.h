@@ -14,6 +14,8 @@ public:
     Set Union( const Set& set ) const;
     Set Intersection( const Set& set ) const;
     bool Equals( const Set& set ) const;
+    bool IsSuperset( const Set& other ) const;
+    bool IsSubset( const Set& other ) const;
 
 	Set(void);
 	~Set(void);
