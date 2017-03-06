@@ -2,7 +2,7 @@
 #include "gtest/gtest.h"
 
 TEST(ThatWeFailQUickly, TautologiesAreTrue) {
-	EXPECT_TRUE(false);
+	EXPECT_TRUE(true);
 }
 
 int main(int argc, char** argv)
