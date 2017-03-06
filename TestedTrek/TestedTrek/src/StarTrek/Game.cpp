@@ -10,7 +10,7 @@ namespace StarTrek {
 
 Random Game::generator;
 
-Game::Game() : e_(10000), t_(8) {
+Game::Game() : m_phaser_energy(10000), m_photon_torpedoes(8) {
     Game::generator = &rand;
 }
 
@@ -25,7 +25,7 @@ void Game::fireWeapon(Galaxy& galaxy) {
 void Game::firePhaser(Galaxy& galaxy) {
     int amount = atoi(galaxy.parameter("amount").c_str());
     Klingon* enemy = (Klingon*)galaxy.variable("target");
-    if (e_ >= amount) {
+    if (m_phaser_energy >= amount) {
         int distance = enemy->distance();
         if (distance > 4000) {
             stringstream message;
@@ -48,7 +48,7 @@ void Game::firePhaser(Galaxy& galaxy) {
                 enemy->destroy();
             }
         }
-        e_ -= amount;
+        m_phaser_energy -= amount;
 
     } else {
         galaxy.writeLine("Insufficient energy to fire phasers!");
@@ -57,7 +57,7 @@ void Game::firePhaser(Galaxy& galaxy) {
 
 void Game::firePhoton(Galaxy& galaxy) {
     Klingon* enemy = (Klingon*)galaxy.variable("target");
-    if (t_ > 0) {
+    if (m_photon_torpedoes > 0) {
         int distance = enemy->distance();
         if ((rnd(4) + ((distance / 500) + 1) > 7)) {
             stringstream message;
@@ -79,7 +79,7 @@ void Game::firePhoton(Galaxy& galaxy) {
                 enemy->destroy();
             }
         }
-        t_--;
+        m_photon_torpedoes--;
 
     } else {
         galaxy.writeLine("No more photon torpedoes!");
@@ -92,15 +92,15 @@ void Game::fireWeapon(Untouchables::WebGadget* webGadget) {
 }
 
 int Game::energyRemaining(void) {
-    return e_;
+    return m_phaser_energy;
 }
 
 int Game::torpedoes(void) {
-    return t_;
+    return m_photon_torpedoes;
 }
 
 void Game::torpedoes(int value) {
-    t_ = value;
+    m_photon_torpedoes = value;
 }
 
 }

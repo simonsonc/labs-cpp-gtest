@@ -14,8 +14,8 @@ typedef int(*Random)(void);
 
 class Game {
 private:
-	int e_;
-	int t_;
+	int m_phaser_energy;
+	int m_photon_torpedoes;
 
 	static int rnd(int maximum) {
 		return generator() % maximum; 
