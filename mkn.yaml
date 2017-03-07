@@ -39,7 +39,7 @@ profile:
     self: gtest
 
   - name: lunexTest
-    src:  Lunex
+    src:  LunEx
     main: Lunex/StockQuoteTests/StockQuoteTests.cpp
     self: gmock
 

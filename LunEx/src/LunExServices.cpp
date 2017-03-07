@@ -10,34 +10,34 @@
 
 
 LunExServices::LunExServices() {
-	// srand(0);
+    // srand(0);
 }
 
 double LunExServices::currentPrice(const char* symbol) {
-	(void)symbol; 
-	pauseToEmulateSendReceive();
-	if (rand() % 100 > 80) {
-		throw LunExServiceUnavailableException();
-	}
+    (void)symbol;
+    pauseToEmulateSendReceive();
+    if (rand() % 100 > 80) {
+        throw LunExServiceUnavailableException();
+    }
 
-	double currentPrice = 42.0 + rand() * 2.1;
+    double currentPrice = 42.0 + rand() * 2.1;
 
-	return truncate(currentPrice);
+    return truncate(currentPrice);
 }
 
 void LunExServices::pauseToEmulateSendReceive() {
-	try {
+    try {
 #ifdef WIN32
-		Sleep(5000);
+        Sleep(5000);
 #else
-		sleep(5000);
+        sleep(5);
 #endif
-	} catch (std::exception& e) {
-		// lucky client!
-	}
+    } catch (std::exception& e) {
+        // lucky client!
+    }
 }
 
 double LunExServices::truncate(double original) {
-	long y = (long) (original * 10000);
-	return (double) y / 10000;
+    long y = (long) (original * 10000);
+    return (double) y / 10000;
 }
