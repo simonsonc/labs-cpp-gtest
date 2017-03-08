@@ -37,6 +37,10 @@ profile:
   - name: giw
     main: GettingItWorking/GettingItWorking/SimplestFailure.cpp
     self: gtest
+    
+  - name: password
+    main: Password/PasswordTest.cpp
+    self: gtest
 
   - name: lunexTest
     src:  LunEx
