@@ -79,6 +79,10 @@ profile:
     main: MessTrek/Tests/YourTests.cpp
     self: gmock
 
+  - name: battleship
+    main: Battleship/BattleshipTests.cpp
+    self: gmock
+
   - name: gtest
     install: lib
     inc: TestedTrek/gtest-1.7.0 TestedTrek/gtest-1.7.0/include
