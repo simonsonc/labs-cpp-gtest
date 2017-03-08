@@ -1,8 +1,13 @@
 #include "gtest/gtest.h"
+#include "gmock/gmock.h"
 
+#include "AiPlayer.h"
 #include "Ship.h"
 #include "Grid.h"
 #include "Game.h"
+
+using ::testing::Ref;
+using ::testing::Return;
 
 TEST(ShipTests, IsNotSunk)
 {
@@ -226,6 +231,27 @@ TEST(GameTests, ComplicatedExample)
     EXPECT_FALSE(game.Hit(1, 1)); // player 2
     EXPECT_TRUE(game.Hit(7, 1)); // player 1
     EXPECT_EQ(0, game.Winner());
+}
+
+
+class MockAiPlayer : public AiPlayer
+{
+public:
+    MOCK_METHOD2(CalculateShipPosition, Coord(Grid& grid, Ship* ship));
+};
+
+TEST(AiTest, PlaceShips)
+{
+    Grid grid;
+    MockAiPlayer ai;
+
+    Ship patrolBoat(2);
+    Ship submarine(3);
+
+    EXPECT_CALL(ai, CalculateShipPosition(Ref(grid), &patrolBoat))
+            .WillOnce(Return(Coord(0,0)));
+    ai.PlaceShips(grid, {&patrolBoat, &submarine});
+    EXPECT_TRUE(grid.Hit(0, 0));
 }
 
 int main(int argc, char** argv)

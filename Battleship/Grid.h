@@ -18,6 +18,8 @@ typedef struct Cell
     bool m_hit = false;
 } Cell;
 
+typedef pair<int, int> Coord;
+
 enum Direction
 {
     HORIZONTAL,
